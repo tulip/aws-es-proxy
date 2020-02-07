@@ -21,8 +21,6 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /home/
 COPY --from=0 /go/src/github.com/abutaha/aws-es-proxy/aws-es-proxy /usr/local/bin/
 
-ENV PORT_NUM 9200
 EXPOSE ${PORT_NUM}
 
-ENTRYPOINT ["aws-es-proxy"] 
-CMD ["-h"]
+ENTRYPOINT ["sh", "-c", "aws-es-proxy -endpoint $ES_ENDPOINT -listen 127.0.0.1:$PORT_NUM"]
